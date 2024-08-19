@@ -1,0 +1,29 @@
+main: int
+	push "part1:\n"
+	print
+	push "Hello!\n"
+	dup
+	print
+	print
+
+	push "\npart2:\n"
+	print
+	push "World!\n"
+	push "No world!\n"
+	over
+	print
+	print
+	print
+
+	push "\npart3:\n"
+	print
+	; this will print 'world!\nHello, '
+	push "Hello, "
+	push "world!\n"
+	; this will print 'Hello, world!\n' (because i swaped)
+	swap
+	print
+	print
+
+	push 0
+	ret

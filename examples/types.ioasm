@@ -1,0 +1,10 @@
+main: int
+    push 10
+    var n1
+    vtype n1 int
+    ; this will cause an error
+    push "A!"
+    var n1
+
+    push 0
+    ret

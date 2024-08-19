@@ -1,0 +1,18 @@
+sumnsub: int
+    add
+    sub
+
+    ret
+
+main: int
+    push "(5 + 6) - 4 = "
+    print
+    push 4
+    push 5
+    push 6
+    call sumnsub
+    print
+    push "\n"
+    print
+    push 0
+    ret

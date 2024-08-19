@@ -1,0 +1,34 @@
+main: int
+    push 10
+    push 20
+    add
+    print
+    push "\n"
+    print
+    push 20
+    push 10
+    sub
+    print
+    push "\n"
+    print
+    push 20
+    push 10
+    mul
+    print
+    push "\n"
+    print
+    push 20
+    push 10
+    div
+    print
+    push "\n"
+    print
+    push 20
+    push 10
+    mod
+    print
+    push "\n"
+    print
+
+    push 0
+    ret

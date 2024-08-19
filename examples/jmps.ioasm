@@ -1,0 +1,24 @@
+test: void
+    dup
+    push 10
+	; geq = ">=", leq = "<=", less = "<", gre = ">", eq = "==", neq = "!="
+    geq end
+    push "Iteration: "
+    print
+    push 1
+    add
+    dup
+    print
+    push "\n"
+    print
+    jmp test
+
+end: void
+    pop
+    ret
+
+main: int
+    push 0
+    call test
+    push 0
+    ret

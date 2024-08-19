@@ -1,0 +1,6 @@
+*.spec
+build/
+dist/
+*.sm
+examples/*.sm
+__pycache__/

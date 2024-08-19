@@ -1,0 +1,7 @@
+main: int
+    push "Hello world!\n"
+    print
+
+	; always use this to your program don't have an segmentation fault
+    push 0
+    ret

@@ -1,0 +1,24 @@
+main: int
+    push 10
+    var n1
+    push 20
+    var n2
+    push n1
+    push n2
+    add
+    var n3
+    push n3
+    print
+    push "\n"
+    print
+    push n1
+    print
+    push "\n"
+    print
+    push n2
+    print
+    push "\n"
+    print
+
+    push 0
+    ret
