@@ -1,6 +1,6 @@
 # sm
 
-Means Simple stack Machine
+Means Simple stack-based Machine
 
 ## quick start
 
