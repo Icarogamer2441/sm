@@ -29,7 +29,7 @@ labels = {}
 
 ret_types = ["int", "float", "string", "void"]
 var_types = ["int", "float", "string"]
-lvars_typess = {}
+vars_types = {}
 
 def interpret(bytecode: bytearray, lvarss: dict = {},
                 ret_type: str = "void", label_name: str = "nolabel"):
@@ -330,32 +330,60 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                 labels[lname][1].append(typ)
             else:
                 lvars_types[name] = var_types[typ]
+        elif op == Types.Exit:
+            if len(lname):
+                labels[lname][1].append(Types.Exit)
+            else:
+                sys.exit(stack.pop())
+        elif op == Types.Prompt:
+            if len(lname):
+                labels[lname][1].append(Types.Prompt)
+            else:
+                stack.append(input())
+        elif op == Types.Toint:
+            if len(lname):
+                labels[lname][1].append(Types.Toint)
+            else:
+                a = stack.pop()
+                stack.append(int(a))
+        elif op == Types.Tofloat:
+            if len(lname):
+                labels[lname][1].append(Types.Tofloat)
+            else:
+                a = stack.pop()
+                stack.append(float(a))
+        elif op == Types.Tostr:
+            if len(lname):
+                labels[lname][1].append(Types.Tostr)
+            else:
+                a = stack.pop()
+                stack.append(str(a))
         else:
             print("Error: unknown opcode: '{}', label name: '{}'".format(op, label_name))
             sys.exit(1)
         
         for var in list(lvars.keys()):
-            if var in lvars_types.keys():
-                if lvars_types[var] == "int":
+            if var in vars_types.keys():
+                if vars_types[var] == "int":
                     if isinstance(lvars[var], int):
                         pass
                     else:
                         print("Error: variable '{}' is not int, label name: '{}'".format(var, label_name))
                         sys.exit(1)
-                elif lvars_types[var] == "float":
+                elif vars_types[var] == "float":
                     if isinstance(lvars[var], float):
                         pass
                     else:
                         print("Error: variable '{}' is not float, label name: '{}'".format(var, label_name))
                         sys.exit(1)
-                elif lvars_types[var] == "string":
+                elif vars_types[var] == "string":
                     if isinstance(lvars[var], str):
                         pass
                     else:
                         print("Error: variable '{}' is not string, label name: '{}'".format(var, label_name))
                         sys.exit(1)
                 else:
-                    print("Error: unknown type: '{}', label name: '{}'".format(lvars_types[var], label_name))
+                    print("Error: unknown type: '{}', label name: '{}'".format(vars_types[var], label_name))
                     exit(1)
             else:
                 pass

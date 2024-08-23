@@ -22,6 +22,11 @@ class OpType:
     Swap: int = 20
     Over: int = 21
     SetType: int = 22
+    Exit: int = 23
+    Prompt: int = 24
+    Toint: int = 25
+    Tofloat: int = 26
+    Tostr: int = 27
 
 class Vm:
     def __init__(self):
@@ -137,6 +142,21 @@ class Vm:
             self.bytecode.append(2)
         else:
             print("Error: unknown variable type: {}".format(typ))
+    
+    def exit(self):
+        self.bytecode.append(OpType.Exit)
+
+    def prompt(self):
+        self.bytecode.append(OpType.Prompt)
+
+    def toint(self):
+        self.bytecode.append(OpType.Toint)
+
+    def tofloat(self):
+        self.bytecode.append(OpType.Tofloat)
+
+    def tostr(self):
+        self.bytecode.append(OpType.Tostr)
     
     def compile(self, out: str):
         with open(out + ".sm", "wb") as f:

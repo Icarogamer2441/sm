@@ -56,6 +56,16 @@ def compiler(code: str):
                 pass
             elif parts[0] == "vtype":
                 vm.setType(parts[1], parts[2])
+            elif parts[0] == "exit":
+                vm.exit()
+            elif parts[0] == "prompt":
+                vm.prompt()
+            elif parts[0] == "toint":
+                vm.toint()
+            elif parts[0] == "tofloat":
+                vm.tofloat()
+            elif parts[0] == "tostr":
+                vm.tostr()
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 
@@ -70,5 +80,5 @@ if __name__ == "__main__":
             print("Error: use '.ioasm' extension")
             sys.exit(1)
     else:
-        print(f"Usage: {sys.argv[0]} <filename.ioasm> <outname>")
+        print(f"Usage: {sys.argv[0]} <file.ioasm> <outname>")
         sys.exit(1)
