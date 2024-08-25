@@ -66,6 +66,8 @@ def compiler(code: str):
                 vm.tofloat()
             elif parts[0] == "tostr":
                 vm.tostr()
+            elif parts[0] == "rand":
+                vm.rand()
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 

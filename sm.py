@@ -27,31 +27,32 @@ class OpType:
     Toint: int = 25
     Tofloat: int = 26
     Tostr: int = 27
+    Rand: int = 28
 
 class Vm:
     def __init__(self):
         self.bytecode = bytearray()
-    
+
     def push(self, value: str):
         self.bytecode.append(OpType.Push)
         self.bytecode.append(len(value))
         self.bytecode.extend(value.encode("utf-8"))
-    
+
     def pop(self):
         self.bytecode.append(OpType.Pop)
-    
+
     def add(self):
         self.bytecode.append(OpType.Add)
-    
+
     def sub(self):
         self.bytecode.append(OpType.Sub)
-    
+
     def mul(self):
         self.bytecode.append(OpType.Mul)
-    
+
     def div(self):
         self.bytecode.append(OpType.Div)
-    
+
     def label(self, name: str, typ: str):
         self.bytecode.append(OpType.Label)
         self.bytecode.append(len(name))
@@ -66,13 +67,13 @@ class Vm:
             self.bytecode.append(3)
         else:
             print("Error: unknown function return type: {}".format(typ))
-    
+
     def prt(self):
         self.bytecode.append(OpType.Print)
-    
+
     def mod(self):
         self.bytecode.append(OpType.Mod)
-    
+
     def var(self, name: str):
         self.bytecode.append(OpType.Var)
         self.bytecode.append(len(name))
@@ -80,56 +81,56 @@ class Vm:
 
     def ret(self):
         self.bytecode.append(OpType.Ret)
-    
+
     def call(self, name: str):
         self.bytecode.append(OpType.Call)
         self.bytecode.append(len(name))
         self.bytecode.extend(name.encode("utf-8"))
-    
+
     def jmp(self, name: str):
         self.bytecode.append(OpType.Jump)
         self.bytecode.append(len(name))
         self.bytecode.extend(name.encode("utf-8"))
-    
+
     def eq(self, name: str):
         self.bytecode.append(OpType.Equal)
         self.bytecode.append(len(name))
         self.bytecode.extend(name.encode("utf-8"))
-    
+
     def neq(self, name: str):
         self.bytecode.append(OpType.NEqual)
         self.bytecode.append(len(name))
         self.bytecode.extend(name.encode("utf-8"))
-    
+
     def greater(self, name: str):
         self.bytecode.append(OpType.Greater)
         self.bytecode.append(len(name))
         self.bytecode.extend(name.encode("utf-8"))
-    
+
     def less(self, name: str):
         self.bytecode.append(OpType.Less)
         self.bytecode.append(len(name))
         self.bytecode.extend(name.encode("utf-8"))
-    
+
     def geq(self, name: str):
         self.bytecode.append(OpType.GEqual)
         self.bytecode.append(len(name))
         self.bytecode.extend(name.encode("utf-8"))
-    
+
     def leq(self, name: str):
         self.bytecode.append(OpType.LEqual)
         self.bytecode.append(len(name))
         self.bytecode.extend(name.encode("utf-8"))
-    
+
     def dup(self):
         self.bytecode.append(OpType.Dup)
-    
+
     def swap(self):
         self.bytecode.append(OpType.Swap)
-    
+
     def over(self):
         self.bytecode.append(OpType.Over)
-    
+
     def setType(self, var: str, typ: str):
         self.bytecode.append(OpType.SetType)
         self.bytecode.append(len(var))
@@ -142,7 +143,7 @@ class Vm:
             self.bytecode.append(2)
         else:
             print("Error: unknown variable type: {}".format(typ))
-    
+
     def exit(self):
         self.bytecode.append(OpType.Exit)
 
@@ -157,7 +158,10 @@ class Vm:
 
     def tostr(self):
         self.bytecode.append(OpType.Tostr)
-    
+
+    def rand(self):
+        self.bytecode.append(OpType.Rand)
+
     def compile(self, out: str):
         with open(out + ".sm", "wb") as f:
             f.write(self.bytecode)

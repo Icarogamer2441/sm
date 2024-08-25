@@ -169,6 +169,32 @@ def comp2(code: str, lvarss: list = []):
                 vm.tofloat()
             elif token[1] == "tostr":
                 vm.tostr()
+            elif token[1] == "rand":
+                vm.rand()
+            elif token[1] == "equal":
+                token = toks[pos]
+                pos += 1
+                vm.eq(token[1])
+            elif token[1] == "notequal":
+                token = toks[pos]
+                pos += 1
+                vm.neq(token[1])
+            elif token[1] == "greater":
+                token = toks[pos]
+                pos += 1
+                vm.greater(token[1])
+            elif token[1] == "less":
+                token = toks[pos]
+                pos += 1
+                vm.less(token[1])
+            elif token[1] == "grequal":
+                token = toks[pos]
+                pos += 1
+                vm.geq(token[1])
+            elif token[1] == "lequal":
+                token = toks[pos]
+                pos += 1
+                vm.leq(token[1])
             else:
                 print("Error: unknown variable/function or keyword -> '{}'".format(token[1]))
                 sys.exit(1)

@@ -1,5 +1,6 @@
 import sm
 import sys
+import random
 
 Types = sm.OpType()
 
@@ -27,8 +28,8 @@ stack.append(len(sys.argv[1:]))
 
 labels = {}
 
-ret_types = ["int", "float", "string", "void"]
-var_types = ["int", "float", "string"]
+ret_types = ["int", "float", "string", "void", "list"]
+var_types = ["int", "float", "string", "list"]
 vars_types = {}
 
 def interpret(bytecode: bytearray, lvarss: dict = {},
@@ -160,6 +161,13 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                             stack.append(ret_value)
                         else:
                             print("Error: unknown use string to return value -> '{}'".format(ret_type))
+                            sys.exit(1)
+                    elif ret_type == "list":
+                        ret_value = stack.pop()
+                        if isinstance(ret_value, list):
+                            stack.append(ret_value)
+                        else:
+                            print("Error: unknown use list to return value -> '{}'".format(ret_type))
                             sys.exit(1)
                     else:
                         print("Error: unknown return type -> '{}'".format(ret_type))
@@ -358,10 +366,17 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
             else:
                 a = stack.pop()
                 stack.append(str(a))
+        elif op == Types.Rand:
+            if len(lname):
+                labels[lname][1].append(Types.Rand)
+            else:
+                b = stack.pop()
+                a = stack.pop()
+                stack.append(random.randint(a, b))
         else:
             print("Error: unknown opcode: '{}', label name: '{}'".format(op, label_name))
             sys.exit(1)
-        
+
         for var in list(lvars.keys()):
             if var in vars_types.keys():
                 if vars_types[var] == "int":
@@ -381,6 +396,12 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                         pass
                     else:
                         print("Error: variable '{}' is not string, label name: '{}'".format(var, label_name))
+                        sys.exit(1)
+                elif vars_types[var] == "list":
+                    if isinstance(lvars[var], list):
+                        pass
+                    else:
+                        print("Error: variable '{}' is not list, label name: '{}'".format(var, label_name))
                         sys.exit(1)
                 else:
                     print("Error: unknown type: '{}', label name: '{}'".format(vars_types[var], label_name))
