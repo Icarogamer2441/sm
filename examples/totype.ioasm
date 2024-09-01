@@ -1,0 +1,8 @@
+main: int
+    push 10
+    tostr
+    var mystr
+    ; you can use 'toint' and 'tofloat' too!
+    vtype mystr string
+    push 0
+    ret

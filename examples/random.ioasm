@@ -1,0 +1,9 @@
+main: int
+    push 10
+    push 20
+    rand
+    print
+    push "\n"
+    print
+    push 0
+    ret

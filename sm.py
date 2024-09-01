@@ -28,6 +28,9 @@ class OpType:
     Tofloat: int = 26
     Tostr: int = 27
     Rand: int = 28
+    List: int = 29
+    Append: int = 30
+    Lpop: int = 31
 
 class Vm:
     def __init__(self):
@@ -65,6 +68,8 @@ class Vm:
             self.bytecode.append(2)
         elif typ == "void":
             self.bytecode.append(3)
+        elif typ == "list":
+            self.bytecode.append(4)
         else:
             print("Error: unknown function return type: {}".format(typ))
 
@@ -141,6 +146,8 @@ class Vm:
             self.bytecode.append(1)
         elif typ == "string":
             self.bytecode.append(2)
+        elif typ == "list":
+            self.bytecode.append(3)
         else:
             print("Error: unknown variable type: {}".format(typ))
 
@@ -161,6 +168,15 @@ class Vm:
 
     def rand(self):
         self.bytecode.append(OpType.Rand)
+    
+    def list(self):
+        self.bytecode.append(OpType.List)
+    
+    def append(self):
+        self.bytecode.append(OpType.Append)
+    
+    def lpop(self):
+        self.bytecode.append(OpType.Lpop)
 
     def compile(self, out: str):
         with open(out + ".sm", "wb") as f:

@@ -68,6 +68,12 @@ def compiler(code: str):
                 vm.tostr()
             elif parts[0] == "rand":
                 vm.rand()
+            elif parts[0] == "list":
+                vm.list()
+            elif parts[0] == "append":
+                vm.append()
+            elif parts[0] == "lpop":
+                vm.lpop()
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 

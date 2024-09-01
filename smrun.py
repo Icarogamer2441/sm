@@ -337,7 +337,7 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                 labels[lname][1].extend(name.encode("utf-8"))
                 labels[lname][1].append(typ)
             else:
-                lvars_types[name] = var_types[typ]
+                vars_types[name] = var_types[typ]
         elif op == Types.Exit:
             if len(lname):
                 labels[lname][1].append(Types.Exit)
@@ -373,6 +373,25 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                 b = stack.pop()
                 a = stack.pop()
                 stack.append(random.randint(a, b))
+        elif op == Types.List:
+            if len(lname):
+                labels[lname][1].append(Types.List)
+            else:
+                stack.append([])
+        elif op == Types.Append:
+            if len(lname):
+                labels[lname][1].append(Types.Append)
+            else:
+                lst = stack.pop()
+                lst.append(stack.pop())
+                stack.append(lst)
+        elif op == Types.Lpop:
+            if len(lname):
+                labels[lname][1].append(Types.Lpop)
+            else:
+                lst = stack.pop()
+                lst.pop()
+                stack.append(lst)
         else:
             print("Error: unknown opcode: '{}', label name: '{}'".format(op, label_name))
             sys.exit(1)

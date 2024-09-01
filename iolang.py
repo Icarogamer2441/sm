@@ -195,6 +195,12 @@ def comp2(code: str, lvarss: list = []):
                 token = toks[pos]
                 pos += 1
                 vm.leq(token[1])
+            elif token[1] == "list":
+                vm.list()
+            elif token[1] == "append":
+                vm.append()
+            elif token[1] == "lpop":
+                vm.lpop()
             else:
                 print("Error: unknown variable/function or keyword -> '{}'".format(token[1]))
                 sys.exit(1)
