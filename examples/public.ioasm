@@ -1,0 +1,13 @@
+test: void
+      push n1
+      print
+      push "\n"
+      print
+
+main: int
+      push 100
+      var n1
+      public n1
+      call test
+      push 0
+      ret

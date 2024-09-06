@@ -74,6 +74,8 @@ def compiler(code: str):
                 vm.append()
             elif parts[0] == "lpop":
                 vm.lpop()
+            elif parts[0] == "public":
+                vm.public(parts[1])
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 

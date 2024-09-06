@@ -17,6 +17,7 @@ class TokenType:
     Colon: str = "COLON"
     Comment: str = "COMMENT"
     Mod: str = "MOD"
+    Public: str = "PUBLICVAR"
 
 def isint(s: str):
     try:
@@ -97,21 +98,24 @@ def tokenize(code: str):
             tokens.append((TokenType.Comment, final))
         elif char == "%":
             tokens.append((TokenType.Mod, char))
+        elif char == "$":
+            tokens.append((TokenType.Public, char))
         else:
             final = ""
-            while pos < len(code) and not char in ";()\n \t\r\"=+-/*:%":
+            while pos < len(code) and not char in ";()\n \t\r\"=+-/*:%$":
                 final += char
 
                 char = code[pos]
                 pos += 1
-            if char in ";()\n \t\r\"=+-/*:":
+            if char in ";()\n \t\r\"=+-/*:$":
                 pos -= 1
-            elif char not in ";()\n \t\r\"=+-/*:":
+            elif char not in ";()\n \t\r\"=+-/*:$":
                 final += char
             tokens.append((TokenType.Id, final))
     return tokens
 
 funcs = []
+pvars = []
 
 vm = sm.Vm()
 
@@ -201,6 +205,17 @@ def comp2(code: str, lvarss: list = []):
                 vm.append()
             elif token[1] == "lpop":
                 vm.lpop()
+            elif token[1] in pvars:
+                vm.push(token[1])
+            elif token[1] == "exists":
+                token = toks[pos]
+                pos += 1
+                if token[0] == TokenType.Id:
+                    pass
+                else:
+                    print("Error: Use identifiers to specify variables names!")
+                    sys.exit(1)
+                lvars.append(token[1])
             else:
                 print("Error: unknown variable/function or keyword -> '{}'".format(token[1]))
                 sys.exit(1)
@@ -217,6 +232,16 @@ def comp2(code: str, lvarss: list = []):
             lvars.append(vname)
         elif token[0] == TokenType.Comment:
             continue
+        elif token[0] == TokenType.Public:
+            token = toks[pos]
+            pos += 1
+            vname = ""
+            if token[0] == TokenType.Id:
+                vname = token[1]
+            else:
+                print("Error: use normal words to specify variable name!")
+                sys.exit(1)
+            vm.public(vname)
         else:
             print("Error: unknown token -> '{}'".format(token[1]))
             sys.exit(1)

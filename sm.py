@@ -31,6 +31,7 @@ class OpType:
     List: int = 29
     Append: int = 30
     Lpop: int = 31
+    Public: int = 32
 
 class Vm:
     def __init__(self):
@@ -177,6 +178,11 @@ class Vm:
     
     def lpop(self):
         self.bytecode.append(OpType.Lpop)
+
+    def public(self, varname: str):
+        self.bytecode.append(OpType.Public)
+        self.bytecode.append(len(varname))
+        self.bytecode.extend(varname.encode("utf-8"))
 
     def compile(self, out: str):
         with open(out + ".sm", "wb") as f:
