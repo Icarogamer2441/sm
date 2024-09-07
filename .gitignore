@@ -4,3 +4,4 @@ dist/
 *.sm
 examples/*.sm
 __pycache__/
+iolangexs/*~

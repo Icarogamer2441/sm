@@ -282,6 +282,36 @@ def comp1(code: str):
                 else:
                     print("Error: use '=' to start a function code block and ';' to end")
                     sys.exit(1)
+            elif token[1] == "var":
+                token = toks[pos]
+                pos += 1
+                vartype = token[1]
+                token = toks[pos]
+                pos += 1
+                if token[0] == TokenType.Id:
+                    vname = token[1]
+                else:
+                    print("Error: use normal words to specify function name!")
+                    sys.exit(1)
+                token = toks[pos]
+                pos += 1
+                if token[0] == TokenType.Set:
+                    token = toks[pos]
+                    pos += 1
+                    finalcode = []
+                    while token[0] != TokenType.Semicolon and pos < len(toks):
+                        finalcode.append(str(token[1]))
+
+                        token = toks[pos]
+                        pos += 1
+                    comp2(" ".join(finalcode))
+                    pvars.append(vname)
+                    vm.setType(vname, vartype)
+                    vm.var(vname)
+                    vm.public(vname)
+                else:
+                    print("Error: use '=' to start a variable value code block and ';' to end")
+                    sys.exit(1)
             else:
                 print("Error: unknwwn keyword -> {}".format(token[1]))
                 sys.exit(1)
