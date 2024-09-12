@@ -23,3 +23,8 @@ executing the compiled code
 ```console
 $ smrun outputname.sm
 ```
+
+compiling the [iolang example file](./examples.iol):
+```console
+$ iolang ./examples.iol outname
+```
