@@ -216,6 +216,18 @@ def comp2(code: str, lvarss: list = []):
                     print("Error: Use identifiers to specify variables names!")
                     sys.exit(1)
                 lvars.append(token[1])
+            elif token[1] == "splits":
+                vm.splits()
+            elif token[1] == "open":
+                vm.openn()
+            elif token[1] == "write":
+                vm.write()
+            elif token[1] == "read":
+                vm.read()
+            elif token[1] == "readlines":
+                vm.readlines()
+            elif token[1] == "close":
+                vm.close()
             else:
                 print("Error: unknown variable/function or keyword -> '{}'".format(token[1]))
                 sys.exit(1)

@@ -76,6 +76,18 @@ def compiler(code: str):
                 vm.lpop()
             elif parts[0] == "public":
                 vm.public(parts[1])
+            elif parts[0] == "splits":
+                vm.splits()
+            elif parts[0] == "open":
+                vm.openn()
+            elif parts[0] == "write":
+                vm.write()
+            elif parts[0] == "read":
+                vm.read()
+            elif parts[0] == "readlines":
+                vm.readlines()
+            elif parts[0] == "close":
+                vm.close()
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 

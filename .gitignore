@@ -3,5 +3,7 @@ build/
 dist/
 *.sm
 examples/*.sm
+iolangexs/*.sm
 __pycache__/
 iolangexs/*~
+*.txt

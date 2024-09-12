@@ -34,10 +34,11 @@ vars_types = {}
 pvars = {}
 
 def interpret(bytecode: bytearray, lvarss: dict = {},
-                ret_type: str = "void", label_name: str = "nolabel"):
+                ret_type: str = "void", label_name: str = "program"):
     lvars = lvarss
     pos = 0
     lname = ""
+    open_file = None
     while pos < len(bytecode):
         op = bytecode[pos]
         pos += 1
@@ -410,6 +411,64 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                 else:
                     print("Error: unknown local variable: '{}'".format(name))
                     sys.exit(1)
+        elif op == Types.Splits:
+            if len(lname):
+                labels[lname][1].append(Types.Splits)
+            else:
+                item = stack.pop()
+                if isinstance(item, int) or isinstance(item, float) or isinstance(item, list) or isinstance(item, dict) or isinstance(item, object):
+                    stack.append(list(str(item)))
+                else:
+                    stack.append(item.split())
+        elif op == Types.OpenFile:
+            if len(lname):
+                labels[lname][1].append(Types.OpenFile)
+            else:
+                # otype filename <keyword: open>
+                fname = stack.pop()
+                opentype = stack.pop()
+                open_file = open(fname, opentype)
+        elif op == Types.Write:
+            if len(lname):
+                labels[lname][1].append(Types.Write)
+            else:
+                # content <keyword: write
+                if open_file != None:
+                    open_file.write(stack.pop())
+                else:
+                    print("Error: no file openeded!")
+                    sys.exit(1)
+        elif op == Types.Read:
+            if len(lname):
+                labels[lname][1].append(Types.Read)
+            else:
+                # content <keyword: write
+                if open_file != None:
+                    stack.append(open_file.read())
+                else:
+                    print("Error: no file openeded!")
+                    sys.exit(1)
+        elif op == Types.ReadLines:
+            if len(lname):
+                labels[lname][1].append(Types.ReadLines)
+            else:
+                # content <keyword: write
+                if open_file != None:
+                    stack.append(open_file.readlines())
+                else:
+                    print("Error: no file openeded!")
+                    sys.exit(1)
+        elif op == Types.Close:
+            if len(lname):
+                labels[lname][1].append(Types.ReadLines)
+            else:
+                # content <keyword: write
+                if open_file != None:
+                    open_file.close()
+                    open_file = None
+                else:
+                    print("Error: no file openeded!")
+                    sys.exit(1)
         else:
             print("Error: unknown opcode: '{}', label name: '{}'".format(op, label_name))
             sys.exit(1)
@@ -477,6 +536,9 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                     exit(1)
             else:
                 pass
+    if open_file != None:
+        print("Error: unclosed file! label: {}".format(label_name))
+        sys.exit(1)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

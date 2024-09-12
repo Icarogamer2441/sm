@@ -32,6 +32,12 @@ class OpType:
     Append: int = 30
     Lpop: int = 31
     Public: int = 32
+    Splits: int = 33
+    OpenFile: int = 35
+    Write: int = 36
+    Read: int = 37
+    ReadLines: int = 38
+    Close: int = 39
 
 class Vm:
     def __init__(self):
@@ -183,6 +189,24 @@ class Vm:
         self.bytecode.append(OpType.Public)
         self.bytecode.append(len(varname))
         self.bytecode.extend(varname.encode("utf-8"))
+    
+    def splits(self):
+        self.bytecode.append(OpType.Splits)
+    
+    def openn(self):
+        self.bytecode.append(OpType.OpenFile)
+    
+    def write(self):
+        self.bytecode.append(OpType.Write)
+    
+    def read(self):
+        self.bytecode.append(OpType.Read)
+    
+    def readlines(self):
+        self.bytecode.append(OpType.ReadLines)
+    
+    def close(self):
+        self.bytecode.append(OpType.Close)
 
     def compile(self, out: str):
         with open(out + ".sm", "wb") as f:
