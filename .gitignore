@@ -7,3 +7,5 @@ iolangexs/*.sm
 __pycache__/
 iolangexs/*~
 *.txt
+tests/
+iolangexs/importtest/*.sm

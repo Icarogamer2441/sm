@@ -28,3 +28,10 @@ compiling the [iolang example file](./examples.iol):
 ```console
 $ iolang ./examples.iol outname
 ```
+
+## compiling the language on windows
+
+```console
+$ python ./build.py all
+$ ./dist/iolang ./iolangexs/ex1.iol
+```

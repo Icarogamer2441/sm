@@ -1,5 +1,6 @@
 import sys
 import sm
+import os
 
 class TokenType:
     Int: str = "INTEGER"
@@ -324,8 +325,23 @@ def comp1(code: str):
                 else:
                     print("Error: use '=' to start a variable value code block and ';' to end")
                     sys.exit(1)
+            elif token[1] == "use":
+                token = toks[pos]
+                pos += 1
+                if token[0] == TokenType.String:
+                    fname = token[1].replace("\"", "")
+                    if fname.endswith(".iol"):
+                        with open(fname, "r") as inp:
+                            code = inp.read()
+                        comp1(code)
+                    else:
+                        print("Error: use '.iol' file extension to import it!")
+                        sys.exit(1)
+                else:
+                    print("Error: use strings to specify your file")
+                    sys.exit(1)
             else:
-                print("Error: unknwwn keyword -> {}".format(token[1]))
+                print("Error: unknown keyword -> {}".format(token[1]))
                 sys.exit(1)
         elif token[0] == TokenType.Comment:
             continue
@@ -336,8 +352,14 @@ def comp1(code: str):
 if __name__ == "__main__":
     if len(sys.argv) > 2:
         if sys.argv[1].endswith(".iol"):
+            if "/" in sys.argv[1]:
+                dir = "/".join(sys.argv[1].split("/")[0:-1])
+                os.chdir(dir)
+                fname = sys.argv[1].split("/")[-1]
+            else:
+                fname = sys.argv[1]
             outname = sys.argv[2]
-            with open(sys.argv[1], "r") as inp:
+            with open(fname, "r") as inp:
                 code = inp.read()
             comp1(code)
             vm.compile(outname)
