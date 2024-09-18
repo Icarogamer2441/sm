@@ -33,5 +33,5 @@ $ iolang ./examples.iol outname
 
 ```console
 $ python ./build.py all
-$ ./dist/iolang ./iolangexs/ex1.iol
+$ ./dist/iolang ./iolangexs/ex1.iol outname
 ```
