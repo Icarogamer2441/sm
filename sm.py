@@ -38,6 +38,7 @@ class OpType:
     Read: int = 37
     ReadLines: int = 38
     Close: int = 39
+    Reversed: int = 40
 
 class Vm:
     def __init__(self):
@@ -207,6 +208,9 @@ class Vm:
     
     def close(self):
         self.bytecode.append(OpType.Close)
+    
+    def reversedd(self):
+        self.bytecode.append(OpType.Reversed)
 
     def compile(self, out: str):
         with open(out + ".sm", "wb") as f:

@@ -475,6 +475,11 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                 else:
                     print("Error: no file openeded!")
                     sys.exit(1)
+        elif op == Types.Reversed:
+            if len(lname):
+                labels[lname][1].append(Types.Reversed)
+            else:
+                stack.append(reversed(stack.pop()))
         else:
             print("Error: unknown opcode: '{}', label name: '{}'".format(op, label_name))
             sys.exit(1)

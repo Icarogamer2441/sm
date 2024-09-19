@@ -88,6 +88,8 @@ def compiler(code: str):
                 vm.readlines()
             elif parts[0] == "close":
                 vm.close()
+            elif parts[0] == "reversed":
+                vm.reversedd()
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 

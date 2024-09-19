@@ -229,6 +229,8 @@ def comp2(code: str, lvarss: list = []):
                 vm.readlines()
             elif token[1] == "close":
                 vm.close()
+            elif token[1] == "reversed":
+                vm.reversedd()
             else:
                 print("Error: unknown variable/function or keyword -> '{}'".format(token[1]))
                 sys.exit(1)
