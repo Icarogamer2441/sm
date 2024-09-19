@@ -422,7 +422,7 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                 labels[lname][1].append(Types.Splits)
             else:
                 item = stack.pop()
-                if isinstance(item, int) or isinstance(item, float) or isinstance(item, list) or isinstance(item, dict) or isinstance(item, object):
+                if isinstance(item, int) or isinstance(item, float) or isinstance(item, list) or isinstance(item, dict):
                     stack.append(list(str(item)))
                 else:
                     stack.append(item.split())
