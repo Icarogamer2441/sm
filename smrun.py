@@ -23,7 +23,13 @@ def is_string(s: str):
         return True
     return False
 
-stack = [item for item in sys.argv[1::-1]]
+stack = []
+
+for i, arg in enumerate(reversed(sys.argv[1:])):
+    if i == len(sys.argv[1:]):
+        continue
+    else:
+        stack.append(arg)
 stack.append(len(sys.argv[1:]))
 
 labels = {}
