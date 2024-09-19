@@ -438,7 +438,7 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
             if len(lname):
                 labels[lname][1].append(Types.Write)
             else:
-                # content <keyword: write
+                # content <keyword: write>
                 if open_file != None:
                     open_file.write(stack.pop())
                 else:
@@ -448,7 +448,7 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
             if len(lname):
                 labels[lname][1].append(Types.Read)
             else:
-                # content <keyword: write
+                # content <keyword: read>
                 if open_file != None:
                     stack.append(open_file.read())
                 else:
@@ -458,7 +458,7 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
             if len(lname):
                 labels[lname][1].append(Types.ReadLines)
             else:
-                # content <keyword: write
+                # content <keyword: readlines>
                 if open_file != None:
                     stack.append(open_file.readlines())
                 else:
@@ -468,7 +468,7 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
             if len(lname):
                 labels[lname][1].append(Types.ReadLines)
             else:
-                # content <keyword: write
+                # content <keyword: close>
                 if open_file != None:
                     open_file.close()
                     open_file = None
