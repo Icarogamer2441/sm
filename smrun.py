@@ -400,7 +400,7 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                 labels[lname][1].append(Types.Lpop)
             else:
                 lst = stack.pop()
-                lst.pop()
+                stack.append(lst.pop())
                 stack.append(lst)
         elif op == Types.Public:
             length = bytecode[pos]

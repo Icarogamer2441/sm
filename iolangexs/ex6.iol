@@ -6,4 +6,5 @@ fn int main =
     mylist lpop :mylist
     20 mylist append :mylist
     mylist print "\n" print
+    # the item you used pop will be in the stack #
     0 return;
