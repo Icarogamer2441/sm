@@ -542,9 +542,6 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                     exit(1)
             else:
                 pass
-    if open_file != None:
-        print("Error: unclosed file! label: {}".format(label_name))
-        sys.exit(1)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
