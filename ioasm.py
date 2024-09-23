@@ -90,6 +90,8 @@ def compiler(code: str):
                 vm.close()
             elif parts[0] == "reversed":
                 vm.reversedd()
+            elif parts[0] == "getidx":
+                vm.getindex()
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 

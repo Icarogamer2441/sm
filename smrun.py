@@ -480,6 +480,11 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                 labels[lname][1].append(Types.Reversed)
             else:
                 stack.append(stack.pop()[::-1])
+        elif op == Types.Getidx:
+            if len(lname):
+                labels[lname][1].append(Types.Getidx)
+            else:
+                stack.append(stack.pop()[stack.pop()])
         else:
             print("Error: unknown opcode: '{}', label name: '{}'".format(op, label_name))
             sys.exit(1)

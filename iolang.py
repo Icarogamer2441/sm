@@ -231,6 +231,8 @@ def comp2(code: str, lvarss: list = []):
                 vm.close()
             elif token[1] == "reversed":
                 vm.reversedd()
+            elif token[1] == "getidx":
+                vm.getindex()
             else:
                 print("Error: unknown variable/function or keyword -> '{}'".format(token[1]))
                 sys.exit(1)
