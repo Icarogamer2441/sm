@@ -3,13 +3,15 @@ import sys
 
 vm = sm.Vm()
 
+defines = {}
+
 def compiler(code: str):
     lines = code.split("\n")
     for line in lines:
         parts = line.split()
         if len(parts):
             if parts[0] == "push":
-                vm.push(" ".join(parts[1:]))
+                vm.push(defines[parts[1]] if parts[1] in defines.keys() else " ".join(parts[1:]))
             elif parts[0] == "pop":
                 vm.pop()
             elif parts[0] == "add":
@@ -27,25 +29,25 @@ def compiler(code: str):
             elif parts[0] == "mod":
                 vm.mod()
             elif parts[0] == "var":
-                vm.var(parts[1])
+                vm.var(parts[1] if parts[1] not in defines.keys() else defines[parts[1]])
             elif parts[0] == "ret":
                 vm.ret()
             elif parts[0] == "call":
-                vm.call(parts[1])
+                vm.call(parts[1] if parts[1] not in defines.keys() else defines[parts[1]])
             elif parts[0] == "jmp":
-                vm.jmp(parts[1])
+                vm.jmp(parts[1] if parts[1] not in defines.keys() else defines[parts[1]])
             elif parts[0] == "eq":
-                vm.eq(parts[1])
+                vm.eq(parts[1] if parts[1] not in defines.keys() else defines[parts[1]])
             elif parts[0] == "neq":
-                vm.neq(parts[1])
+                vm.neq(parts[1] if parts[1] not in defines.keys() else defines[parts[1]])
             elif parts[0] == "gre":
-                vm.greater(parts[1])
+                vm.greater(parts[1] if parts[1] not in defines.keys() else defines[parts[1]])
             elif parts[0] == "less":
-                vm.less(parts[1])
+                vm.less(parts[1] if parts[1] not in defines.keys() else defines[parts[1]])
             elif parts[0] == "geq":
-                vm.geq(parts[1])
+                vm.geq(parts[1] if parts[1] not in defines.keys() else defines[parts[1]])
             elif parts[0] == "leq":
-                vm.leq(parts[1])
+                vm.leq(parts[1] if parts[1] not in defines.keys() else defines[parts[1]])
             elif parts[0] == "dup":
                 vm.dup()
             elif parts[0] == "swap":
@@ -75,7 +77,7 @@ def compiler(code: str):
             elif parts[0] == "lpop":
                 vm.lpop()
             elif parts[0] == "public":
-                vm.public(parts[1])
+                vm.public(parts[1] if parts[1] not in defines.keys() else defines[parts[1]])
             elif parts[0] == "splits":
                 vm.splits()
             elif parts[0] == "open":
@@ -92,6 +94,8 @@ def compiler(code: str):
                 vm.reversedd()
             elif parts[0] == "getidx":
                 vm.getindex()
+            elif parts[0] == "%define":
+                defines[parts[1]] = " ".join(parts[2:])
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 

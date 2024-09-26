@@ -25,11 +25,12 @@ def is_string(s: str):
 
 stack = []
 
-for i, arg in enumerate(reversed(sys.argv[1:])):
-    if i == len(sys.argv[1:]):
-        continue
-    else:
-        stack.append(arg)
+# for i, arg in enumerate(reversed(sys.argv[1:])):
+#     if i == len(sys.argv[1:]):
+#         continue
+#     else:
+#         stack.append(arg)
+stack.append(sys.argv[1:])
 stack.append(len(sys.argv[1:]))
 
 labels = {}
@@ -145,7 +146,7 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                     if isinstance(ret_value, int):
                         sys.exit(ret_value)
                     else:
-                        print("Error: unknown use int to return main label value (main always need to return int values) -> '{}'".format(ret_type))
+                        print("Error: use int to return main label value (main always need to return int values) -> '{}'".format(ret_type))
                         sys.exit(1)
                 else:
                     ret_value = 0
@@ -156,33 +157,34 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                         if isinstance(ret_value, int):
                             stack.append(ret_value)
                         else:
-                            print("Error: unknown use int to return value -> '{}'".format(ret_type))
+                            print("Error: use int to return value -> '{}'".format(ret_type))
                             sys.exit(1)
                     elif ret_type == "float":
                         ret_value = stack.pop()
                         if isinstance(ret_value, float):
                             stack.append(ret_value)
                         else:
-                            print("Error: unknown use float to return value -> '{}'".format(ret_type))
+                            print("Error: use float to return value -> '{}'".format(ret_type))
                             sys.exit(1)
                     elif ret_type == "string":
                         ret_value = stack.pop()
                         if isinstance(ret_value, str):
                             stack.append(ret_value)
                         else:
-                            print("Error: unknown use string to return value -> '{}'".format(ret_type))
+                            print("Error: use string to return value -> '{}'".format(ret_type))
                             sys.exit(1)
                     elif ret_type == "list":
                         ret_value = stack.pop()
                         if isinstance(ret_value, list):
                             stack.append(ret_value)
                         else:
-                            print("Error: unknown use list to return value -> '{}'".format(ret_type))
+                            print("Error: use list to return value -> '{}'".format(ret_type))
                             sys.exit(1)
                     else:
                         print("Error: unknown return type -> '{}'".format(ret_type))
                         sys.exit(1)
                     break
+                lname = ""
         elif op == Types.Call:
             length = bytecode[pos]
             pos += 1

@@ -1,0 +1,24 @@
+%define PI 3.14
+%define zero 0
+
+; you can use defines in: jumps, like gre, geq, leq, etc. pushs. variable names. example:
+%define var_name n1
+push 10
+var var_name
+public var_name
+; yes, you can use in 'public' too!
+; and in 'call' and normal jump too (jmp)
+
+println: void
+    print
+    push "\n"
+    print
+
+main: int
+    push PI
+    call println
+    push var_name
+    call println
+
+    push zero
+    ret

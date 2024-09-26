@@ -9,3 +9,4 @@ iolangexs/*~
 *.txt
 tests/
 iolangexs/importtest/*.sm
+nasl*
