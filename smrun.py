@@ -487,6 +487,39 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                 labels[lname][1].append(Types.Getidx)
             else:
                 stack.append(stack.pop()[stack.pop()])
+        elif op == Types.Halt:
+            if len(lname):
+                labels[lname][1].append(Types.Halt)
+            else:
+                sys.exit(0)
+        elif op == Types.ShiftLeft:
+            if len(lname):
+                labels[lname][1].append(Types.ShiftLeft)
+            else:
+                b = stack.pop()
+                a = stack.pop()
+                stack.append(a << b)
+        elif op == Types.ShiftRight:
+            if len(lname):
+                labels[lname][1].append(Types.ShiftRight)
+            else:
+                b = stack.pop()
+                a = stack.pop()
+                stack.append(a >> b)
+        elif op == Types.Bor:
+            if len(lname):
+                labels[lname][1].append(Types.Bor)
+            else:
+                b = stack.pop()
+                a = stack.pop()
+                stack.append(a | b)
+        elif op == Types.Band:
+            if len(lname):
+                labels[lname][1].append(Types.Band)
+            else:
+                b = stack.pop()
+                a = stack.pop()
+                stack.append(a & b)
         else:
             print("Error: unknown opcode: '{}', label name: '{}'".format(op, label_name))
             sys.exit(1)

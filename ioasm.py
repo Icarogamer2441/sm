@@ -96,6 +96,16 @@ def compiler(code: str):
                 vm.getindex()
             elif parts[0] == "%define":
                 defines[parts[1]] = " ".join(parts[2:])
+            elif parts[0] == "halt":
+                vm.halt()
+            elif parts[0] == "band":
+                vm.band()
+            elif parts[0] == "bor":
+                vm.bor()
+            elif parts[0] == "shl":
+                vm.shl()
+            elif parts[0] == "shr":
+                vm.shr()
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 

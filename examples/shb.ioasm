@@ -1,0 +1,29 @@
+; all things that exists in iolang exists here in ioasm (but i didn't showed it)
+
+; added: halt, shl, shr, bor, band
+
+println: void
+	print
+	push "\n"
+	print
+
+main: int
+	push 1
+	push 2
+	shr
+	call println
+	push 1
+	push 2
+	shl
+	call println
+	push 1
+	push 2
+	bor
+	call println
+	push 1
+	push 2
+	band
+	call println
+
+	; halt can be used in every local to stop the program with exit code '0'
+	halt

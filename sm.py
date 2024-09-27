@@ -1,45 +1,50 @@
 class OpType:
-    Push: int = 0
-    Pop: int = 1
-    Add: int = 2
-    Sub: int = 3
-    Mul: int = 4
-    Div: int = 5
-    Label: int = 6
-    Print: int = 7
-    Mod: int = 8
-    Var: int = 9
-    Ret: int = 10
-    Call: int = 11
-    Jump: int = 12
-    Equal: int = 13
-    NEqual: int = 14
-    Greater: int = 15
-    Less: int = 16
-    GEqual: int = 17
-    LEqual: int = 18
-    Dup: int = 19
-    Swap: int = 20
-    Over: int = 21
-    SetType: int = 22
-    Exit: int = 23
-    Prompt: int = 24
-    Toint: int = 25
-    Tofloat: int = 26
-    Tostr: int = 27
-    Rand: int = 28
-    List: int = 29
-    Append: int = 30
-    Lpop: int = 31
-    Public: int = 32
-    Splits: int = 33
-    OpenFile: int = 35
-    Write: int = 36
-    Read: int = 37
-    ReadLines: int = 38
-    Close: int = 39
-    Reversed: int = 40
-    Getidx: int = 41
+    Push: int       = 0
+    Pop: int        = 1
+    Add: int        = 2
+    Sub: int        = 3
+    Mul: int        = 4
+    Div: int        = 5
+    Label: int      = 6
+    Print: int      = 7
+    Mod: int        = 8
+    Var: int        = 9
+    Ret: int        = 10
+    Call: int       = 11
+    Jump: int       = 12
+    Equal: int      = 13
+    NEqual: int     = 14
+    Greater: int    = 15
+    Less: int       = 16
+    GEqual: int     = 17
+    LEqual: int     = 18
+    Dup: int        = 19
+    Swap: int       = 20
+    Over: int       = 21
+    SetType: int    = 22
+    Exit: int       = 23
+    Prompt: int     = 24
+    Toint: int      = 25
+    Tofloat: int    = 26
+    Tostr: int      = 27
+    Rand: int       = 28
+    List: int       = 29
+    Append: int     = 30
+    Lpop: int       = 31
+    Public: int     = 32
+    Splits: int     = 33
+    OpenFile: int   = 35
+    Write: int      = 36
+    Read: int       = 37
+    ReadLines: int  = 38
+    Close: int      = 39
+    Reversed: int   = 40
+    Getidx: int     = 41
+    Halt: int       = 42
+    ShiftLeft: int  = 43
+    ShiftRight: int = 44
+    Bor: int        = 45
+    Band: int       = 46
 
 class Vm:
     def __init__(self):
@@ -215,6 +220,21 @@ class Vm:
     
     def getindex(self):
         self.bytecode.append(OpType.Getidx)
+
+    def halt(self):
+        self.bytecode.append(OpType.Halt)
+
+    def shl(self):
+        self.bytecode.append(OpType.ShiftLeft)
+
+    def shr(self):
+        self.bytecode.append(OpType.ShiftRight)
+
+    def bor(self):
+        self.bytecode.append(OpType.Bor)
+
+    def band(self):
+        self.bytecode.append(OpType.Band)
 
     def compile(self, out: str):
         with open(out + ".sm", "wb") as f:

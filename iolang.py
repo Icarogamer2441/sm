@@ -233,6 +233,14 @@ def comp2(code: str, lvarss: list = []):
                 vm.reversedd()
             elif token[1] == "getidx":
                 vm.getindex()
+            elif token[1] == "shl":
+                vm.shl()
+            elif token[1] == "shr":
+                vm.shr()
+            elif token[1] == "band":
+                vm.band()
+            elif token[1] == "bor":
+                vm.bor()
             else:
                 print("Error: unknown variable/function or keyword -> '{}'".format(token[1]))
                 sys.exit(1)
