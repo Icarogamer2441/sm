@@ -45,6 +45,7 @@ class OpType:
     ShiftRight: int = 44
     Bor: int        = 45
     Band: int       = 46
+    Popr: int       = 47
 
 class Vm:
     def __init__(self):
@@ -235,6 +236,11 @@ class Vm:
 
     def band(self):
         self.bytecode.append(OpType.Band)
+
+    def popr(self, regname: str):
+        self.bytecode.append(OpType.Popr)
+        self.bytecode.append(len(regname))
+        self.bytecode.extend(regname.encode("utf-8"))
 
     def compile(self, out: str):
         with open(out + ".sm", "wb") as f:

@@ -35,3 +35,15 @@ $ iolang ./examples.iol outname
 $ python ./build.py all
 $ ./dist/iolang ./iolangexs/ex1.iol outname
 ```
+
+## changing sm register mode
+
+type 0 (default type):
+```console
+$ smrun myfile.sm -t0
+```
+
+type 1 (need to specify):
+```console
+$ smrun myfile.sm -t1
+```

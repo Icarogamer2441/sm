@@ -40,8 +40,15 @@ var_types = ["int", "float", "string", "list"]
 vars_types = {}
 pvars = {}
 
+vm_type = 0
+
+regs_t0 = {"sar": 0, "sbr": 0, "scr": 0, "r4": 0, "r5": 0, "r6": 0} # registers for type 0
+
+regs_t1 = {"tar": 0, "tbr": 0, "tcr": 0, "tdr": 0, "r5": 0, "r6": 0, "r7": 0} # registers for type 1
+
 def interpret(bytecode: bytearray, lvarss: dict = {},
                 ret_type: str = "void", label_name: str = "program"):
+    global vm_type
     lvars = lvarss
     pos = 0
     lname = ""
@@ -69,6 +76,10 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                     stack.append(lvars[value])
                 elif value in pvars.keys():
                     stack.append(pvars[value])
+                elif value in regs_t0 and vm_type == 0:
+                    stack.append(regs_t0[value])
+                elif value in regs_t1 and vm_type == 1:
+                    stack.append(regs_t1[value])
                 else:
                     print("Error: unknown variable -> '{}'".format(value))
                     sys.exit(1)
@@ -520,6 +531,33 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                 b = stack.pop()
                 a = stack.pop()
                 stack.append(a & b)
+        elif op == Types.Popr:
+            length = bytecode[pos]
+            pos += 1
+            rname = bytecode[pos:pos + length].decode("utf-8")
+            pos += length
+            if len(lname):
+                labels[lname][1].append(Types.Popr)
+                labels[lname][1].append(length)
+                labels[lname][1].extend(rname.encode("utf-8"))
+            else:
+                if vm_type == 0 and rname in regs_t0.keys():
+                    regs_t0[rname] = stack.pop()
+                elif vm_type == 1:
+                    pass
+                else:
+                    print("Error: unknown register: '{}'. you're using type 0".format(rname))
+                    sys.exit(1)
+                if vm_type == 1 and rname in regs_t1.keys():
+                    regs_t1[rname] = stack.pop()
+                elif vm_type == 0:
+                    pass
+                else:
+                    print("Error: unknown register: '{}'. you're using type 1".format(rname))
+                    sys.exit(1)
+                if vm_type > 1:
+                    print("Error: no registers for type {}".format(vm_type))
+                    sys.exit(1)
         else:
             print("Error: unknown opcode: '{}', label name: '{}'".format(op, label_name))
             sys.exit(1)
@@ -591,6 +629,10 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         if sys.argv[1].endswith(".sm"):
+            if "-t0" in sys.argv:
+                vm_type = 0
+            elif "-t1" in sys.argv:
+                vm_type = 1
             with open(sys.argv[1], "rb") as inp:
                 code = inp.read()
             interpret(code)

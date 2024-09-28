@@ -1,0 +1,9 @@
+main: int
+	push "Hello, world!\n"
+	; register from type 0
+	popr sar
+
+	push sar
+	print
+
+	halt

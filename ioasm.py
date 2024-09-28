@@ -106,6 +106,8 @@ def compiler(code: str):
                 vm.shl()
             elif parts[0] == "shr":
                 vm.shr()
+            elif parts[0] == "popr":
+                vm.popr(parts[1])
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 
