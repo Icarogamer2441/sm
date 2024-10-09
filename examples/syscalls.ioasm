@@ -1,0 +1,19 @@
+; now the strings ends with \0 (null character), but the print instruction remove it when you use it
+; the null char can be used to create strlen-like functions
+
+main: int
+    ; how to print messages with syscall with sm type 0 :)
+    ; syscall number
+    push 0
+    popr sar ; change this to tar if you're using type 1
+    ; lenght (you need this to print lists, dicts and int/floats)
+    push 14
+    popr sbr ; tbr
+    ; message
+    push "Hello, world!\n"
+    popr scr ; tcr
+    ; syscall :)
+    syscall
+
+    ; you can use the print instruction or the syscall to print messages now
+    halt ; stop the program with exit code 0    

@@ -108,6 +108,8 @@ def compiler(code: str):
                 vm.shr()
             elif parts[0] == "popr":
                 vm.popr(parts[1])
+            elif parts[0] == "syscall":
+                vm.syscall()
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 

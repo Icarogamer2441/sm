@@ -71,7 +71,7 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                 elif is_float(value):
                     stack.append(float(value))
                 elif is_string(value):
-                    stack.append(value[1:len(value) - 1].replace("\\n", "\n").replace("\\t", "\t").replace("\\r", "\r").replace("\\b", "\b"))
+                    stack.append(value[1:len(value) - 1].replace("\\n", "\n").replace("\\t", "\t").replace("\\r", "\r").replace("\\b", "\b").replace("\\0", "\0") + "\0")
                 elif value in lvars.keys():
                     stack.append(lvars[value])
                 elif value in pvars.keys():
@@ -129,7 +129,11 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
             if len(lname):
                 labels[lname][1].append(Types.Print)
             else:
-                print(stack.pop(), end="")
+                msg = stack.pop()
+                if isinstance(msg, str):
+                    print(msg[0:-1], end="")
+                else:
+                    print(msg, end="")
         elif op == Types.Mod:
             if len(lname):
                 labels[lname][1].append(Types.Mod)
@@ -558,6 +562,24 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                 if vm_type > 1:
                     print("Error: no registers for type {}".format(vm_type))
                     sys.exit(1)
+        elif op == Types.Syscall:
+            if len(lname):
+                labels[lname][1].append(Types.Syscall)
+            else:
+                if vm_type == 0:
+                    if regs_t0["sar"] == 0:
+                        msg_len = regs_t0["sbr"]
+                        if isinstance(regs_t0["scr"], str) or isinstance(regs_t0["scr"], list) or isinstance(regs_t0["scr"], dict):
+                            print(regs_t0["scr"][0:msg_len], end="")
+                        else:
+                            print(str(regs_t0["scr"])[0:msg_len], end="")
+                elif vm_type == 1:
+                    if regs_t1["tar"] == 1:
+                        msg_len = regs_t1["tbr"]
+                        if isinstance(regs_t1["tcr"], str) or isinstance(regs_t0["tcr"], list) or isinstance(regs_t0["tcr"], dict):
+                            print(regs_t1["tcr"][0:msg_len], end="")
+                        else:
+                            print(str(regs_t1["tcr"])[0:msg_len], end="")
         else:
             print("Error: unknown opcode: '{}', label name: '{}'".format(op, label_name))
             sys.exit(1)

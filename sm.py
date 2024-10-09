@@ -46,6 +46,7 @@ class OpType:
     Bor: int        = 45
     Band: int       = 46
     Popr: int       = 47
+    Syscall: int    = 48
 
 class Vm:
     def __init__(self):
@@ -241,6 +242,9 @@ class Vm:
         self.bytecode.append(OpType.Popr)
         self.bytecode.append(len(regname))
         self.bytecode.extend(regname.encode("utf-8"))
+
+    def syscall(self):
+        self.bytecode.append(OpType.Syscall)
 
     def compile(self, out: str):
         with open(out + ".sm", "wb") as f:
