@@ -57,7 +57,7 @@ like this:
 include "test1.iol"
 include "test2.ioasm"
 
-varExists hello1
+# you don't need to use funcExists or varExists with .iol files because it imports everything to the file #
 varExists hello2
 
 # your libraries for include will be in your user directory like this: $(userdir)/sminclude/ #
