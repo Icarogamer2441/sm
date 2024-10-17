@@ -47,3 +47,23 @@ type 1 (need to specify):
 ```console
 $ smrun myfile.sm -t1
 ```
+
+## includes
+
+now you can use include (but only in iolang)
+like this:
+```iolang
+# example: #
+include "test1.iol"
+include "test2.ioasm"
+
+varExists hello1
+varExists hello2
+
+# your libraries for include will be in your user directory like this: $(userdir)/sminclude/ #
+
+fn int main =
+    hello1 print
+    hello2 print
+    0 return;
+```

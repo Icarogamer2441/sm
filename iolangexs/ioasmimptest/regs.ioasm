@@ -1,0 +1,11 @@
+tosar: void
+    popr sar
+
+getsar: void
+    push sar
+
+; print with new line
+printwnl: void
+    print
+    push "\n"
+    print

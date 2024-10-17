@@ -573,6 +573,11 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                             print(regs_t0["scr"][0:msg_len], end="")
                         else:
                             print(str(regs_t0["scr"])[0:msg_len], end="")
+                    elif regs_t0["sar"] == 1:
+                        if isinstance(regs_t0["sbr"], str) or isinstance(regs_t0["sbr"], list) or isinstance(regs_t0["sbr"], dict):
+                            regs_t0["scr"] = len(regs_t0["sbr"])
+                        else:
+                            regs_t0["scr"] = len(str(regs_t0["sbr"]))
                 elif vm_type == 1:
                     if regs_t1["tar"] == 1:
                         msg_len = regs_t1["tbr"]
@@ -580,6 +585,11 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                             print(regs_t1["tcr"][0:msg_len], end="")
                         else:
                             print(str(regs_t1["tcr"])[0:msg_len], end="")
+                    elif regs_t1["tar"] == 2:
+                        if isinstance(regs_t1["tbr"], str) or isinstance(regs_t1["tbr"], list) or isinstance(regs_t1["tbr"], dict):
+                            regs_t1["tcr"] = len(regs_t1["tdr"])
+                        else:
+                            regs_t1["tcr"] = len(str(regs_t1["tdr"]))
         else:
             print("Error: unknown opcode: '{}', label name: '{}'".format(op, label_name))
             sys.exit(1)
