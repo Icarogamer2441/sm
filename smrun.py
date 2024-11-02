@@ -27,9 +27,6 @@ def is_string(s: str):
 memory = 50000
 
 stack = []
-stacksize = int(memory / 2)
-memory = memory - stacksize
-maxvars = int(memory)
 
 # for i, arg in enumerate(reversed(sys.argv[1:])):
 #     if i == len(sys.argv[1:]):
@@ -691,6 +688,10 @@ if __name__ == "__main__":
                 if arg == "--max-memory" or arg == "-mm":
                     memory = int(sys.argv[i + 1])
                     continue
+            
+            stacksize = int(memory / 2)
+            memory = memory - stacksize
+            maxvars = int(memory)
             
             with open(sys.argv[1], "rb") as inp:
                 code = inp.read()
