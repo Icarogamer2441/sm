@@ -243,6 +243,8 @@ def ioasmcom(code: str):
                 vm.popr(parts[1])
             elif parts[0] == "syscall":
                 vm.syscall()
+            elif parts[0] == "wait":
+                vm.wait()
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 
@@ -367,6 +369,8 @@ def comp2(code: str, lvarss: list = []):
                 vm.band()
             elif token[1] == "bor":
                 vm.bor()
+            elif token[1] == "wait":
+                vm.wait()
             else:
                 print("Error: unknown variable/function or keyword -> '{}'".format(token[1]))
                 sys.exit(1)

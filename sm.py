@@ -47,6 +47,7 @@ class OpType:
     Band: int       = 46
     Popr: int       = 47
     Syscall: int    = 48
+    Wait: int       = 49
 
 class Vm:
     def __init__(self):
@@ -245,6 +246,9 @@ class Vm:
 
     def syscall(self):
         self.bytecode.append(OpType.Syscall)
+    
+    def wait(self):
+        self.bytecode.append(OpType.Wait)
 
     def compile(self, out: str):
         with open(out + ".sm", "wb") as f:

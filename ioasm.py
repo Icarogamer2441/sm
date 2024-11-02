@@ -110,6 +110,8 @@ def compiler(code: str):
                 vm.popr(parts[1])
             elif parts[0] == "syscall":
                 vm.syscall()
+            elif parts[0] == "wait":
+                vm.wait()
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 

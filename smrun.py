@@ -1,6 +1,7 @@
 import sm
 import sys
 import random
+import time
 
 Types = sm.OpType()
 
@@ -23,7 +24,12 @@ def is_string(s: str):
         return True
     return False
 
+memory = 50000
+
 stack = []
+stacksize = int(memory / 2)
+memory = memory - stacksize
+maxvars = int(memory)
 
 # for i, arg in enumerate(reversed(sys.argv[1:])):
 #     if i == len(sys.argv[1:]):
@@ -590,6 +596,12 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                             regs_t1["tcr"] = len(regs_t1["tdr"])
                         else:
                             regs_t1["tcr"] = len(str(regs_t1["tdr"]))
+        elif op == Types.Wait:
+            if len(lname):
+                labels[lname][1].append(Types.Wait)
+            else:
+                ms = stack.pop()
+                time.sleep(ms / 1000)
         else:
             print("Error: unknown opcode: '{}', label name: '{}'".format(op, label_name))
             sys.exit(1)
@@ -658,6 +670,15 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
             else:
                 pass
 
+        numofvars = len(pvars) + len(lvars)
+        if numofvars > maxvars:
+            print("Error: too many variables, label name: '{}'".format(label_name))
+            sys.exit(1)
+        
+        if len(stack) > stacksize:
+            print("Error: stack overflow, label name: '{}'".format(label_name))
+            sys.exit(1)
+
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         if sys.argv[1].endswith(".sm"):
@@ -665,6 +686,12 @@ if __name__ == "__main__":
                 vm_type = 0
             elif "-t1" in sys.argv:
                 vm_type = 1
+
+            for i, arg in enumerate(sys.argv):
+                if arg == "--max-memory" or arg == "-mm":
+                    memory = sys.argv[i + 1]
+                    continue
+            
             with open(sys.argv[1], "rb") as inp:
                 code = inp.read()
             interpret(code)

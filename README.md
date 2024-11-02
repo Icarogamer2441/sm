@@ -67,3 +67,27 @@ fn int main =
     hello2 print
     0 return;
 ```
+
+## set max memory
+
+to you set your max memory you can use:
+
+```console
+$ smrun myfile.sm -mm <memory count>
+```
+
+or:
+
+```console
+$ smrun myfile.sm --max-memory <memory count>
+```
+
+## about memory
+
+the memory will create a limit to the stack and the variables.
+
+```python
+stacksize = int(memory / 2)
+memory = memory - stacksize
+maxvars = int(memory)
+```
