@@ -689,7 +689,7 @@ if __name__ == "__main__":
 
             for i, arg in enumerate(sys.argv):
                 if arg == "--max-memory" or arg == "-mm":
-                    memory = sys.argv[i + 1]
+                    memory = int(sys.argv[i + 1])
                     continue
             
             with open(sys.argv[1], "rb") as inp:
