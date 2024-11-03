@@ -137,7 +137,7 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
             else:
                 msg = stack.pop()
                 if isinstance(msg, str):
-                    print(msg[0:-1], end="")
+                    print(msg, end="")
                 else:
                     print(msg, end="")
         elif op == Types.Mod:
