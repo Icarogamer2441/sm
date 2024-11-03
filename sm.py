@@ -48,6 +48,8 @@ class OpType:
     Popr: int       = 47
     Syscall: int    = 48
     Wait: int       = 49
+    Cmd: int        = 50
+    Chdir: int      = 51
 
 class Vm:
     def __init__(self):
@@ -249,6 +251,12 @@ class Vm:
     
     def wait(self):
         self.bytecode.append(OpType.Wait)
+    
+    def cmd(self):
+        self.bytecode.append(OpType.Cmd)
+    
+    def chdir(self):
+        self.bytecode.append(OpType.Chdir)
 
     def compile(self, out: str):
         with open(out + ".sm", "wb") as f:

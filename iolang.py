@@ -61,7 +61,6 @@ def tokenize(code: str):
             pos += 1
             while char != "\"" and pos < len(code):
                 final += char
-
                 char = code[pos]
                 pos += 1
             final += char
@@ -245,6 +244,10 @@ def ioasmcom(code: str):
                 vm.syscall()
             elif parts[0] == "wait":
                 vm.wait()
+            elif parts[0] == "cmd":
+                vm.cmd()
+            elif parts[0] == "chdir":
+                vm.chdir()
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 
@@ -371,6 +374,10 @@ def comp2(code: str, lvarss: list = []):
                 vm.bor()
             elif token[1] == "wait":
                 vm.wait()
+            elif token[1] == "cmd":
+                vm.cmd()
+            elif token[1] == "chandir":
+                vm.chdir()
             else:
                 print("Error: unknown variable/function or keyword -> '{}'".format(token[1]))
                 sys.exit(1)

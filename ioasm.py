@@ -112,6 +112,10 @@ def compiler(code: str):
                 vm.syscall()
             elif parts[0] == "wait":
                 vm.wait()
+            elif parts[0] == "cmd":
+                vm.cmd()
+            elif parts[0] == "chdir":
+                vm.chdir()
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 

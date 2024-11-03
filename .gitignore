@@ -10,3 +10,4 @@ iolangexs/*~
 tests/
 iolangexs/importtest/*.sm
 nasl*
+iolangexs/*.txt

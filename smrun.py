@@ -2,6 +2,9 @@ import sm
 import sys
 import random
 import time
+import os
+
+sys.setrecursionlimit(100000000)
 
 Types = sm.OpType()
 
@@ -74,7 +77,7 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                 elif is_float(value):
                     stack.append(float(value))
                 elif is_string(value):
-                    stack.append(value[1:len(value) - 1].replace("\\n", "\n").replace("\\t", "\t").replace("\\r", "\r").replace("\\b", "\b").replace("\\0", "\0") + "\0")
+                    stack.append(value[1:len(value) - 1].replace("\\n", "\n").replace("\\t", "\t").replace("\\r", "\r").replace("\\b", "\b").replace("\\0", "\0").replace("\\'", "\""))
                 elif value in lvars.keys():
                     stack.append(lvars[value])
                 elif value in pvars.keys():
@@ -599,6 +602,26 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
             else:
                 ms = stack.pop()
                 time.sleep(ms / 1000)
+        elif op == Types.Cmd:
+            if len(lname):
+                labels[lname][1].append(Types.Cmd)
+            else:
+                cmd = stack.pop()
+                if isinstance(cmd, str):
+                    os.system(cmd)
+                else:
+                    print("Error: unknown command type: {}".format(type(cmd)))
+                    sys.exit(1)
+        elif op == Types.Chdir:
+            if len(lname):
+                labels[lname][1].append(Types.Chdir)
+            else:
+                path = stack.pop()
+                if isinstance(path, str):
+                    os.chdir(path)
+                else:
+                    print("Error: unknown path type: {}".format(type(path)))
+                    sys.exit(1)
         else:
             print("Error: unknown opcode: '{}', label name: '{}'".format(op, label_name))
             sys.exit(1)
