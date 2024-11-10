@@ -116,6 +116,10 @@ def compiler(code: str):
                 vm.cmd()
             elif parts[0] == "chdir":
                 vm.chdir()
+            elif parts[0] == "inc":
+                vm.inc(parts[1])
+            elif parts[0] == "dec":
+                vm.dec(parts[1])
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 

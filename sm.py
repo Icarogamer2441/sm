@@ -50,6 +50,8 @@ class OpType:
     Wait: int       = 49
     Cmd: int        = 50
     Chdir: int      = 51
+    Inc: int        = 52
+    Dec: int        = 53
 
 class Vm:
     def __init__(self):
@@ -257,6 +259,16 @@ class Vm:
     
     def chdir(self):
         self.bytecode.append(OpType.Chdir)
+    
+    def inc(self, varname: str):
+        self.bytecode.append(OpType.Inc)
+        self.bytecode.append(len(varname))
+        self.bytecode.extend(varname.encode("utf-8"))
+    
+    def dec(self, varname: str):
+        self.bytecode.append(OpType.Dec)
+        self.bytecode.append(len(varname))
+        self.bytecode.extend(varname.encode("utf-8"))
 
     def compile(self, out: str):
         with open(out + ".sm", "wb") as f:

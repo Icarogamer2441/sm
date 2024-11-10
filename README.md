@@ -31,6 +31,12 @@ $ iolang ./examples.iol outname
 
 ## compiling the language on windows
 
+you will need to install the following package:
+```console
+$ pip install pyinstaller
+```
+
+to compile, use:
 ```console
 $ python ./build.py all
 $ ./dist/iolang ./iolangexs/ex1.iol outname

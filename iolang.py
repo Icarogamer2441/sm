@@ -19,6 +19,8 @@ class TokenType:
     Comment: str = "COMMENT"
     Mod: str = "MOD"
     Public: str = "PUBLICVAR"
+    Inc: str = "INCREMENT"
+    Dec: str = "DECREMENT"
 
 def isint(s: str):
     try:
@@ -76,9 +78,23 @@ def tokenize(code: str):
         elif char in "\n\t \r":
             continue
         elif char == "+":
-            tokens.append((TokenType.Plus, char))
+            if pos < len(code):
+                if code[pos] == "+":
+                    tokens.append((TokenType.Inc, "++"))
+                    pos += 1
+                else:
+                    tokens.append((TokenType.Plus, "+"))
+            else:
+                tokens.append((TokenType.Plus, char))
         elif char == "-":
-            tokens.append((TokenType.Minus, char))
+            if pos < len(code):
+                if code[pos] == "-":
+                    tokens.append((TokenType.Dec, "--"))
+                    pos += 1
+                else:
+                    tokens.append((TokenType.Minus, "-"))
+            else:
+                tokens.append((TokenType.Minus, char))
         elif char == "*":
             tokens.append((TokenType.Times, char))
         elif char == "/":
@@ -248,6 +264,10 @@ def ioasmcom(code: str):
                 vm.cmd()
             elif parts[0] == "chdir":
                 vm.chdir()
+            elif parts[0] == "inc":
+                vm.inc(parts[1])
+            elif parts[0] == "dec":
+                vm.dec(parts[1])
             else:
                 print("Error: unknown instruction: {}".format(parts[0]))
 
@@ -404,6 +424,26 @@ def comp2(code: str, lvarss: list = []):
                 print("Error: use normal words to specify variable name!")
                 sys.exit(1)
             vm.public(vname)
+        elif token[0] == TokenType.Inc:
+            token = toks[pos]
+            pos += 1
+            vname = ""
+            if token[0] == TokenType.Id:
+                vname = token[1]
+            else:
+                print("Error: use normal words to specify variable name!")
+                sys.exit(1)
+            vm.inc(vname)
+        elif token[0] == TokenType.Dec:
+            token = toks[pos]
+            pos += 1
+            vname = ""
+            if token[0] == TokenType.Id:
+                vname = token[1]
+            else:
+                print("Error: use normal words to specify variable name!")
+                sys.exit(1)
+            vm.dec(vname)
         else:
             print("Error: unknown token -> '{}'".format(token[1]))
             sys.exit(1)

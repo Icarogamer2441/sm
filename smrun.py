@@ -622,6 +622,40 @@ def interpret(bytecode: bytearray, lvarss: dict = {},
                 else:
                     print("Error: unknown path type: {}".format(type(path)))
                     sys.exit(1)
+        elif op == Types.Inc:
+            length = bytecode[pos]
+            pos += 1
+            vname  = bytecode[pos:pos + length].decode("utf-8")
+            pos += length
+            if len(lname):
+                labels[lname][1].append(Types.Inc)
+                labels[lname][1].append(length)
+                labels[lname][1].extend(vname.encode("utf-8"))
+            else:
+                if vname in lvars.keys():
+                    lvars[vname] += 1
+                elif vname in pvars.keys():
+                    pvars[vname] += 1
+                else:
+                    print("Error: unknown variable name: {}".format(vname))
+                    sys.exit(1)
+        elif op == Types.Dec:
+            length = bytecode[pos]
+            pos += 1
+            vname  = bytecode[pos:pos + length].decode("utf-8")
+            pos += length
+            if len(lname):
+                labels[lname][1].append(Types.Dec)
+                labels[lname][1].append(length)
+                labels[lname][1].extend(vname.encode("utf-8"))
+            else:
+                if vname in lvars.keys():
+                    lvars[vname] -= 1
+                elif vname in pvars.keys():
+                    pvars[vname] -= 1
+                else:
+                    print("Error: unknown variable name: {}".format(vname))
+                    sys.exit(1)
         else:
             print("Error: unknown opcode: '{}', label name: '{}'".format(op, label_name))
             sys.exit(1)
